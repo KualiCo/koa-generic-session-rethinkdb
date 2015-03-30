@@ -1,0 +1,23 @@
+{
+  "name": "koa-generic-session-rethinkdb",
+  "version": "1.0.0",
+  "description": "A RethinkDB session store for koa-generic-session",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R dot test/*.js"
+  },
+  "keywords": [
+    "koa",
+    "session",
+    "rethinkdb"
+  ],
+  "author": "Jamison Dance <jergason@gmail.com> (http://jamisondance.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "co-mocha": "1.1.0",
+    "rethinkdbdash": "1.16.13"
+  },
+  "dependencies": {
+    "lodash": "3.6.0"
+  }
+}
