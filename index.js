@@ -2,8 +2,8 @@ var _ = require('lodash')
 
 function RethinkSession(opts) {
   this.connection = opts.connection
-  this.dbName = opts.db
-  this.tableName = opts.table
+  this.dbName = opts.db || 'sessions'
+  this.tableName = opts.table || 'sessions'
 }
 
 RethinkSession.prototype.setup = function*() {

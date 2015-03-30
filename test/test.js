@@ -20,6 +20,8 @@ describe('RethinkSession', function() {
   before(function*() {
     try {
       yield connection.dbDrop(TEST_DB)
+      // drop the default db too
+      yield connection.dbDrop('sessions')
     } catch (e) {}
   })
 
@@ -67,5 +69,17 @@ describe('RethinkSession', function() {
     yield rs.destroy(sid)
     sessions = yield connection.db(TEST_DB).table(TEST_TABLE).getAll(sid, {index: 'sid'})
     assert.equal(sessions.length, 0)
+  })
+
+  it('falls back to a default db and table if you dont specify them', function* () {
+    var rs = new RethinkSession({
+      connection: connection
+    })
+    yield rs.setup()
+    var res = yield connection.db(rs.dbName).table(rs.tableName)
+    assert(Array.isArray(res))
+    assert.equal(res.length, 0)
+    var session = yield rs.get('fooooooooooooo')
+    assert.equal(null, session)
   })
 })
