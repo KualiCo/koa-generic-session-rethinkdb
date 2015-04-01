@@ -1,4 +1,5 @@
 var _ = require('lodash')
+var debug = require('debug')('koa:generic-session-rethinkdb')
 
 function RethinkSession(opts) {
   this.connection = opts.connection
@@ -34,12 +35,15 @@ RethinkSession.prototype.table = function() {
 }
 
 RethinkSession.prototype.get = function* (sid) {
+  debug('get', sid)
   var res = yield this.table().getAll(sid, {index: 'sid'})
+  debug('got', res[0])
   return res[0]
 }
 
 RethinkSession.prototype.set = function* (sid, session) {
   // check if there is a doc with that id
+  debug('set', sid, session)
   var res = yield this.table().getAll(sid, {index: 'sid'})
   if (res[0]) {
     res = res[0]
@@ -57,8 +61,10 @@ RethinkSession.prototype.set = function* (sid, session) {
 }
 
 RethinkSession.prototype.destroy = function* (sid) {
+  debug('destroy', sid)
   var res = yield this.table().getAll(sid, {index: 'sid'})
   if (res[0]) {
+    debug('found session to destroy', res[0])
     return yield this.table().get(res[0].id).delete()
   }
 }
