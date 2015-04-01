@@ -1,6 +1,6 @@
 {
   "name": "koa-generic-session-rethinkdb",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A RethinkDB session store for koa-generic-session",
   "main": "index.js",
   "scripts": {
