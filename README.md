@@ -20,12 +20,12 @@ var session = require('koa-generic-session')
 var RethinkSession = require('koa-generic-session-rethinkdb')
 var rethinkdb = require('rethinkdbdash')
 
-var connection = rethinkdb({
+var r = rethinkdb({
   host: 'localhost',
   port: 28015
 })
 
-var sessionStore = new RethinkSession({connection: connection})
+var sessionStore = new RethinkSession({r: r})
 // create the db, table and indexes to store sessions
 sessionStore.setup()
 
@@ -45,8 +45,8 @@ Return a new RethinkSession store. `opts` are options.
 
 #### Options
 
-* `connection` - a [rethinkdbdash](https://github.com/neumino/rethinkdbdash)
-  connection to a rethink server or cluster. required.
+* `r` - a [rethinkdbdash](https://github.com/neumino/rethinkdbdash)
+  instance connected to a rethink server or cluster. required.
 * `db` - the name of a db to connnect to or create. optional.
 * `table` - the name of the table to store session in. optional.
 
