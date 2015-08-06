@@ -2,7 +2,7 @@ var _ = require('lodash')
 var debug = require('debug')('koa:generic-session-rethinkdb')
 
 function RethinkSession(opts) {
-  this.connection = opts.connection
+  this.r = opts.r
   this.dbName = opts.db || 'sessions'
   this.tableName = opts.table || 'sessions'
 }
@@ -10,19 +10,19 @@ function RethinkSession(opts) {
 RethinkSession.prototype.setup = function*() {
   var errors = []
   try {
-    yield this.connection.dbCreate(this.dbName)
+    yield this.r.dbCreate(this.dbName)
   } catch (e) {
     errors.push(e)
   }
 
   try {
-    yield this.connection.db(this.dbName).tableCreate(this.tableName)
+    yield this.r.db(this.dbName).tableCreate(this.tableName)
   } catch (e) {
     errors.push(e)
   }
 
   try {
-    yield this.connection.db(this.dbName).table(this.tableName).indexCreate('sid')
+    yield this.r.db(this.dbName).table(this.tableName).indexCreate('sid')
   } catch (e) {
     errors.push(e)
   }
@@ -31,7 +31,7 @@ RethinkSession.prototype.setup = function*() {
 }
 
 RethinkSession.prototype.table = function() {
-  return this.connection.db(this.dbName).table(this.tableName)
+  return this.r.db(this.dbName).table(this.tableName)
 }
 
 RethinkSession.prototype.get = function* (sid) {
