@@ -47,8 +47,8 @@ Return a new RethinkSession store. `opts` are options.
 
 * `connection` - a [rethinkdbdash](https://github.com/neumino/rethinkdbdash)
   connection to a rethink server or cluster. required.
-* `dbName` - the name of a db to connnect to or create. optional.
-* `tableName` - the name of the table to store session in. optional.
+* `db` - the name of a db to connnect to or create. optional.
+* `table` - the name of the table to store session in. optional.
 
 
 ## Contributing
