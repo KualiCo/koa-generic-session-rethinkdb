@@ -17,6 +17,7 @@ npm i --save koa-generic-session-rethinkdb
 var koa = require('koa')
 // for use with koa-generic-session
 var session = require('koa-generic-session')
+var co = require('co')
 var RethinkSession = require('koa-generic-session-rethinkdb')
 var rethinkdb = require('rethinkdbdash')
 
@@ -27,7 +28,7 @@ var connection = rethinkdb({
 
 var sessionStore = new RethinkSession({connection: connection})
 // create the db, table and indexes to store sessions
-sessionStore.setup()
+co(function*() { yield sessionStore.setup() })
 
 
 
